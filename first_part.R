@@ -6,6 +6,7 @@ library(raster)
 # Import data and setting the working directory
 setwd("C:/lab")
 
+# Brick function to import the data
 image_2011 <- brick("p224r63_2011_masked.grd")
 image_2011
 
@@ -102,9 +103,60 @@ plot(image_2011[[4]], col = col_pink)
 dev.off()
 
 
+#RGB plotting, plot of multi-layered raster object
+
+# RGB scheme for colors
+# Real colors image
+# Blue = 1
+# Green = 2
+# Red = 3
+
+?plotRGB
+plotRGB(image_2011, r = 3, g = 2, b = 1, stretch = "Lin")  # linear stretch
+plotRGB(image_2011, r = 4, g = 3, b = 2, stretch = "Lin") # vegetation is red
+plotRGB(image_2011, r = 3, g = 4, b = 2, stretch = "Lin") # vegetation is green
+# the fourth band is the NIR band, plants strongly reflect NIR
+
+plotRGB(image_2011, r = 3, g = 2, b = 4, stretch = "Lin") # vegetation is blue
+# deforestated soil is yellow
+
+par(mfrow = c(2, 1))
+plotRGB(image_2011, r = 3, g = 2, b = 1, stretch = "Lin")  # natural colors
+plotRGB(image_2011, r = 4, g = 3, b = 2, stretch = "Lin")
+
+dev.off()
+
+# Histogram stretching
+par(mfrow = c(2, 1))
+plotRGB(image_2011, r = 3, g = 2, b = 1, stretch = "Hist")  # natural colors
+plotRGB(image_2011, r = 4, g = 3, b = 2, stretch = "Hist")
 
 
+# Mixed stretching, differences between the 2 types of stretch
+plotRGB(image_2011, r = 4, g = 3, b = 2, stretch = "Lin")
+plotRGB(image_2011, r = 4, g = 3, b = 2, stretch = "Hist")
 
 
+# import the 1988 image
+image_1988 <- brick("p224r63_1988_masked.grd")
 
+# plot in RGB space (natural colours)
+plotRGB(image_1988, r=3, g=2, b=1, stretch="Lin")
+plotRGB(image_1988, r=4, g=3, b=2, stretch="Lin")
 
+plotRGB(image_1988, 4, 3, 2, stretch="Lin")
+
+# multiframe
+par(mfrow=c(2,1))
+plotRGB(image_1988, 4, 3, 2, stretch="Lin")
+plotRGB(image_2011, 4, 3, 2, stretch="Lin")
+
+dev.off()
+plotRGB(image_1988, 4, 3, 2, stretch="Hist")
+
+# multiframe with 4 images
+par(mfrow=c(2,2))
+plotRGB(image_1988, 4, 3, 2, stretch="Lin")
+plotRGB(image_2011, 4, 3, 2, stretch="Lin")
+plotRGB(image_1988, 4, 3, 2, stretch="Hist")
+plotRGB(image_2011, 4, 3, 2, stretch="Hist")
