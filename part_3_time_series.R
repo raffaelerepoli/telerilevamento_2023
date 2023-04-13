@@ -39,12 +39,12 @@ TGr <- stack(import)  # or terra::c within terra package
 TGr
 plot(TGr)
 
-plotRGB(TGr, 1, 2, 3, stretch="Lin")
-plotRGB(TGr, 2, 3, 4, stretch="Lin")
-plotRGB(TGr, 4, 3, 2, stretch="Lin")
+plotRGB(TGr, 1, 2, 3, stretch = "Lin")
+plotRGB(TGr, 2, 3, 4, stretch = "Lin")
+plotRGB(TGr, 4, 3, 2, stretch = "Lin")
 
 cl <- colorRampPalette(c("blue","lightblue","pink","red"))(100)
-plot(TGr, col=cl)
+plot(TGr, col = cl)
 
 dev.off()
 
@@ -52,7 +52,7 @@ dev.off()
 dift = TGr[[2]] - TGr[[1]]
 
 cl <- colorRampPalette(c("blue","lightblue","pink","red"))(100)
-plot(dift, col=cl)
+plot(dift, col = cl)
 
 # install.packages("terra")
 library(terra) 
@@ -66,14 +66,15 @@ plot(test)
 
 # levelplot(TGr)
 cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
-plot(TGr, col=cl)
+plot(TGr, col = cl)
 
-levelplot(TGr,col.regions=cl,
-          names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
-levelplot(TGr,col.regions=cl, main="LST variation in time",
-          names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
+levelplot(TGr, col.regions = cl,
+          names.attr = c("July 2000","July 2005", "July 2010", "July 2015"))
+levelplot(TGr, col.regions = cl, main = "LST variation in time",
+          names.attr = c("July 2000","July 2005", "July 2010", "July 2015"))
 
 dev.off()
+
 
 
 #NO2 decrease during the lockdown period ----
@@ -82,25 +83,27 @@ library(raster)
 
 setwd("C:/lab/en")
 
+# importing the first image file
 en01 <- raster("EN_0001.png")
-plot(en01)
+en01
+plot(en01) # it's January, before the lockdown
 
 cl <- colorRampPalette(c('red','orange','yellow'))(100) #
-plot(en01, col=cl)
+plot(en01, col = cl)
 
 en13 <- raster("EN_0013.png")
-plot(en13, col=cl)
+plot(en13, col = cl) # it's March, after lockdown began
 
 # Let's import the whole set (altogether!)
 
 # Exercise: import the whole as in the Greenland example
-# by the following steps: list.files, lapply, stack
+ # by the following steps: list.files, lapply, stack
 
-rlist_2 <- list.files(pattern="EN")
+rlist_2 <- list.files(pattern = "EN")
 rlist_2
 
-# lapply(X,FUN)
-rimp <- lapply(rlist, raster)
+# lapply(X, FUN)
+rimp <- lapply(rlist_2, raster)
 rimp
 
 # stack
@@ -108,12 +111,25 @@ en <- stack(rimp)
 en
 
 # plot everything
-plot(en, col=cl)
+plot(en, col = cl)
 
-# Exercise: plot EN01 besides EN13
-par(mfrow=c(1,2))
-plot(en[[1]], col=cl)
-plot(en[[13]], col=cl)
+# Check
+par(mfrow = c(1,2))
+plot(en[[1]], col = cl)
+plot(en01, col = cl)
+dev.off()
+dif_check <- en01 - en[[1]]
+dif_check
+plot(dif_check)
+dif_check_13 <- en13 - en[[13]]
+dif_check_13
+plot(dif_check_13)
+dev.off()
+
+# Exercise: plot first and last images
+par(mfrow = c(1,2))
+plot(en[[1]], col = cl)
+plot(en[[13]], col = cl)
 
 # or:
 en113 <- stack(en[[1]], en[[13]])
