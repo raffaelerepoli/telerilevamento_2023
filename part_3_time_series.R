@@ -133,15 +133,15 @@ plot(en[[13]], col = cl)
 
 # or:
 en113 <- stack(en[[1]], en[[13]])
-plot(en113, col=cl)
+plot(en113, col = cl)
 
 # let's make the difference:
 difen <-  en[[1]] - en[[13]]
 cldif <- colorRampPalette(c('blue','white','red'))(100) #
-par(mfrow=c(1,1))
-plot(difen, col=cldif)
+par(mfrow = c(1,1))
+plot(difen, col = cldif)
 
 # plotRGB of three files together
-par(mfrow=c(2,1))
-plotRGB(en, r=1, g=7, b=13, stretch="lin")
-plotRGB(en, r=1, g=7, b=13, stretch="hist")
+par(mfrow = c(2,1))
+plotRGB(en, 1, 7, 13, stretch="lin")
+plotRGB(en, 1, 7, 13, stretch="hist")
