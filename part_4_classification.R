@@ -1,4 +1,4 @@
-# CLASSIFICATION OF REMOTE SENSING DATA VIA RSTOOLBOX
+# CLASSIFICATION OF REMOTE SENSING DATA
 
 # Installing devtools
 # install.packages("devtools")
@@ -48,9 +48,11 @@ plot(sun_class, col = cl)
 # What is the pixel size of high energy level? Talking about frequencies
 frequencies <- freq(sun_class)
 frequencies
-tot <- 2221440
+tot <- ncell(sun_class)
 percentages <- round((frequencies*100)/tot, digits = 5)
 percentages
+
+library(tidyverse)
 
 m1 <- matrix(frequencies, nrow = 3, ncol = 2)
 m2 <- matrix(percentages, nrow = 3, ncol = 2)
@@ -61,3 +63,69 @@ data <- as_tibble(data)
 colnames(data) <- c("class", "pixels", "freq")
 data
 
+
+
+# day 2 Grand Canyon
+
+grand_canyon <- brick("dolansprings_oli_2013088_canyon_lrg.jpg")
+grand_canyon
+
+# rosso = 1
+# verde = 2
+# blu = 3
+
+plotRGB(grand_canyon, 1, 2, 3, stretch = "lin")
+
+# change the stretch to histogram stretching
+plotRGB(grand_canyon, 1, 2, 3, stretch = "hist")
+
+# The image is quite big; let's crop it!
+gc_crop <- crop(grand_canyon, drawExtent())
+plotRGB(gc_crop, 1, 2, 3, stretch="lin")
+
+ncell(grand_canyon)   # n of pixels of the original image
+ncell(gc_crop)   # n of pixels of the cropped image
+
+
+# classification
+
+# 1. Get values
+singlenr <- getValues(gc_crop)
+singlenr
+
+# 2. Classify
+kcluster <- kmeans(singlenr, centers = 3)
+kcluster
+
+# 3. Set values
+gcclass <- setValues(gc_crop[[1]], kcluster$cluster) # assign new values to a raster object
+
+cl <- colorRampPalette(c('yellow','black','red'))(100)
+plot(gcclass, col=cl)
+
+# class 1: volcanic rocks
+# class 2: sandstone
+# class 3: conglomerates
+
+frequencies <- freq(gcclass)
+frequencies
+tot <- ncell(gcclass)
+percentages = frequencies * 100 /  tot
+percentages
+
+
+# Exercise: classify the map with 4 classes
+singlenr_2 <- getValues(gc_crop)
+singlenr_2
+
+kcluster_2 <- kmeans(singlenr, centers = 4)
+kcluster_2
+
+gcclass_2 <- setValues(gc_crop[[1]], kcluster$cluster) # assign new values to a raster object
+
+cl <- colorRampPalette(c('yellow','black','red', 'blue'))(100)
+plot(gcclass_2, col=cl)
+
+frequencies <- freq(gcclass_2)
+tot <- ncell(gcclass_2)
+percentages = frequencies * 100 /  tot
