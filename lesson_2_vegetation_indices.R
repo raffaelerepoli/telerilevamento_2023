@@ -33,10 +33,6 @@ plot(dvi1992, col = cl)
 
 plot(l1992)
 # reflectance is between 0 and 255
-# information theory of Shannon -> bit (0, 1)
-# this image is in 8 bits
-2 ^ 8  # total values
-
 # so the DVI image range is -255 to 255, because red is 0 - 255
 
 
