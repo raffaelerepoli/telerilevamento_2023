@@ -46,12 +46,6 @@ l2006
 plot(l2006)
 plotRGB(l2006, 1, 2, 3, stretch = "Lin")
 
-# calculate DVI for 2006
-dvi2006 = l2006[[1]] - l2006[[2]]
-
-# plotting the DVI
-plot(dvi2006, col = cl) 
-
 # Exercise: plot the image from 1992 ontop of that of 2006
 par(mfrow = c(2, 1))
 plotRGB(l1992, 1, 2, 3, stretch = "Lin")
@@ -63,6 +57,12 @@ plotRGB(l1992, 1, 2, 3, stretch = "Lin")
 plotRGB(l2006, 1, 2, 3, stretch = "Lin")
 
 dev.off()
+
+# calculate DVI for 2006
+dvi2006 = l2006[[1]] - l2006[[2]]
+
+# plotting the DVI
+plot(dvi2006, col = cl)
 
 
 # TIME DIFFERENCE ----
@@ -79,11 +79,9 @@ dvi_dif = dvi1992 - dvi2006
 
 # Plotting the results of multitemporal analysis
 cld <- colorRampPalette(c("blue", "white", "red"))(100)
-plot(dvi_dif, col = cld) # the higher the difference the bigger the deforestation
-
+plot(dvi_dif, col = cld)
+# the higher the difference the bigger the deforestation
 # if the difference is negative there is a gain in forest cover
-
-# the number of bits of an image is "radiometric resolution"
 
 
 # NDVI ----
