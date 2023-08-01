@@ -3,27 +3,27 @@
 # Let's install the raster package
 library(raster)
 
-# Setting the working directory
+# Set the working directory
 setwd("C:/lab")
 
 # Brick function to import the data
 image_2011 <- brick("p224r63_2011_masked.grd")
 image_2011  # ncell = total pixels
-# A RasterBrick is a multi-layer raster object
+# a RasterBrick is a multi-layer raster object
 
-# Beware of the size of plots pane, if it's too small it won't work in RStudio
+# beware of the size of plots pane, if it's too small it won't work in RStudio
 
-# plotting data in a raw way
+# Plot data in a raw way
 plot(image_2011) # default legend
 
 colors <- colorRampPalette(c("red", "orange", "yellow")) (100) # n° of shades
 colors_3 <- colorRampPalette(c("red", "orange", "yellow")) (3)
 
-# plotting with colors we chose
+# Plot with the colours palette we chose
 plot(image_2011, col = colors)
 plot(image_2011, col = colors_3) # less details = worse image quality
 
-# plotting just one element of the multi-layer image
+# Plot just one element of the multi-layer image
 plot(image_2011[[4]], col = colors)
 
 nir <- image_2011$B4_sre # another way to plot it, by assignment
@@ -41,10 +41,10 @@ plot(image_2011[[4]], col = new_palette) # the fourth layer
 # b3 = red
 # b4 = NIR
 
-# New color palette
+# New colour palette
 palette <- colorRampPalette(c("pink", "violet", "darkorchid4")) (100)
 
-# Plotting the NIR band of the image in different ways
+# Plot the NIR band of the image in different ways
 plot(image_2011$B4_sre, col = new_palette)
 plot(image_2011[[4]], col = palette) 
 
@@ -128,17 +128,17 @@ dev.off()
 # Exercise: plot the NIR band
 plot(image_2011[[4]])
 
-# import the 1988 image
+# Import the 1988 image
 image_1988 <- brick("p224r63_1988_masked.grd")
 plot(image_1988)
 
-# plot in RGB space (natural colours)
+# Plot in RGB space (natural colours)
 plotRGB(image_1988, r = 3, g = 2, b = 1, stretch = "Lin")
 plotRGB(image_1988, r = 4, g = 3, b = 2, stretch = "Lin")
 
 plotRGB(image_1988, 4, 3, 2, stretch = "Lin")  # faster way
 
-# multiframe to see the differences between 1988 and 2011
+# Multiframe to see the differences between 1988 and 2011
 par(mfrow = c(2,1))
 plotRGB(image_1988, 4, 3, 2, stretch = "Lin")
 plotRGB(image_2011, 4, 3, 2, stretch = "Lin")
@@ -146,7 +146,7 @@ plotRGB(image_2011, 4, 3, 2, stretch = "Lin")
 dev.off()
 plotRGB(image_1988, 4, 3, 2, stretch = "Hist")  # histogram stretch
 
-# multiframe with 4 images
+# Multiframe with 4 images
 par(mfrow=c(2,2))
 plotRGB(image_1988, 4, 3, 2, stretch="Lin")
 plotRGB(image_2011, 4, 3, 2, stretch="Lin")
