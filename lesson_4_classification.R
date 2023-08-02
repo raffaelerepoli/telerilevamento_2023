@@ -1,23 +1,14 @@
-# CLASSIFICATION OF REMOTE SENSING DATA
-
-# Installing devtools
-# install.packages("devtools")
-library(devtools)
-
-# devtools::install_github("bleutner/RStoolbox")
-library(RStoolbox)
-
-setwd("C:/lab")
+# CLASSIFICATION OF REMOTE SENSING DATA VIA RSTOOLBOX
 
 library(raster)
 
-# brick function for stratified files, raster for images with just one layer
+setwd("C:/lab")
+
+# Brick function for stratified files, raster for images with just one layer
 
 sun <- brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
-plotRGB(sun, 1, 2, 3, stretch = "Lin")
-plot(sun)
+plotRGB(sun, 1, 2, 3, stretch = "lin")
 plotRGB(sun, 1, 2, 3, stretch = "hist")
-
 sun
 
 # 1. Get values
@@ -32,7 +23,7 @@ k_cluster <- kmeans(single_nr, centers = 3) # centers = num of classes/clusters
 k_cluster
 
 # 3. Set values to a raster on the basis of the sun image
-sun_class <- setValues(sun[[1]], k_cluster$cluster)
+sun_class <- setValues(sun[[1]], k_cluster$cluster) # assign new values to a raster object
 # from continues data to a raster object
 # using the first layer of the sun image and cluster component of kmeans
 # the first layer is like a box to be filled
@@ -41,28 +32,16 @@ cl <- colorRampPalette(c("yellow", "black", "red"))(100)
 plot(sun_class, col = cl)
 
 # class 1: highest energy level
-# class 3: lowest energy level
 # class 2: medium energy level
+# class 3: lowest energy level
 
-
-# What is the pixel size of high energy level? Talking about frequencies
+# Calculate frequencies of  pixels in clusters
 frequencies <- freq(sun_class)
 frequencies
 tot <- ncell(sun_class)
+tot
 percentages <- round((frequencies*100)/tot, digits = 5)
-percentages
-
-library(tidyverse)
-
-m1 <- matrix(frequencies, nrow = 3, ncol = 2)
-m2 <- matrix(percentages, nrow = 3, ncol = 2)
-data <- cbind(m1, m2)
-data <- data[, -3]
-data[, 3] <-  round(data[, 3], digits = 2)
-data <- as_tibble(data)
-colnames(data) <- c("class", "pixels", "freq")
-data
-
+percentages  # count columns are the perc frequencies
 
 
 # day 2 Grand Canyon
@@ -70,18 +49,15 @@ data
 grand_canyon <- brick("dolansprings_oli_2013088_canyon_lrg.jpg")
 grand_canyon
 
-# rosso = 1
-# verde = 2
-# blu = 3
-
+# red = 1 green = 2 blue = 3
 plotRGB(grand_canyon, 1, 2, 3, stretch = "lin")
 
-# change the stretch to histogram stretching
+# Change the stretch to histogram stretching
 plotRGB(grand_canyon, 1, 2, 3, stretch = "hist")
 
 # The image is quite big; let's crop it!
 gc_crop <- crop(grand_canyon, drawExtent())
-plotRGB(gc_crop, 1, 2, 3, stretch="lin")
+plotRGB(gc_crop, 1, 2, 3, stretch = "lin")
 
 ncell(grand_canyon)   # n of pixels of the original image
 ncell(gc_crop)   # n of pixels of the cropped image
@@ -118,14 +94,16 @@ percentages
 singlenr_2 <- getValues(gc_crop)
 singlenr_2
 
-kcluster_2 <- kmeans(singlenr, centers = 4)
+kcluster_2 <- kmeans(singlenr_2, centers = 4)
 kcluster_2
 
-gcclass_2 <- setValues(gc_crop[[1]], kcluster$cluster) # assign new values to a raster object
+gcclass_2 <- setValues(gc_crop[[1]], kcluster_2$cluster)
 
 cl <- colorRampPalette(c('yellow','black','red', 'blue'))(100)
 plot(gcclass_2, col=cl)
 
 frequencies <- freq(gcclass_2)
+frequencies
 tot <- ncell(gcclass_2)
 percentages = frequencies * 100 /  tot
+percentages
