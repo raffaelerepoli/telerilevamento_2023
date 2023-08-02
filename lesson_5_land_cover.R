@@ -1,7 +1,7 @@
+# LAND COVER
+
 library(raster)
-# install.packages("ggplot2")
 library(ggplot2) # for ggplot graphs
-# install.packages("patchwork")
 library(patchwork) # for multiframes with ggplot2
 
 setwd("C:/lab/")
@@ -11,9 +11,9 @@ defor2 <- brick("defor2_.png")
 
 # NIR 1, RED 2, GREEN 3
 
-par(mfrow=c(2,1))
-plotRGB(defor1, 1, 2, 3, stretch="lin")
-plotRGB(defor2, 1, 2, 3, stretch="lin")
+par(mfrow = c(2,1))
+plotRGB(defor1, 1, 2, 3, stretch = "lin")
+plotRGB(defor2, 1, 2, 3, stretch = "lin")
 
 # 1. Get all the single values
 singlenr1 <- getValues(defor1)
@@ -26,12 +26,14 @@ kcluster1
 # 3. Recreating an image
 defor1_class <- setValues(defor1[[1]], kcluster1$cluster) # assign new values to a raster object
 
+par(mfrow = c(1,1))
 plot(defor1_class)
 
-# class1: forest
-# class2: bare soil
+# class1 (white): forest
+# class2 (green): bare soil
 
-#---- Classification of the 2006 image
+
+# Classification of the 2006 image
 
 # 1. Get all the single values
 singlenr2 <- getValues(defor2)
@@ -46,10 +48,10 @@ defor2_class <- setValues(defor2[[1]], kcluster2$cluster) # assign new values to
 
 plot(defor2_class)
 
-# class1: forest
-# class2: bare soil
+# class1 (white): forest
+# class2 (green) : bare soil
 
-#--- multiframe
+#--- Multiframe
 
 par(mfrow = c(2,1))
 plot(defor1_class)
@@ -65,6 +67,8 @@ tot1
 
 percentages1 <- frequencies1 * 100 / tot1
 percentages1
+# forest: 89.75
+# bare soil: 10.25
 
 #---- 2006
 
@@ -76,7 +80,6 @@ tot2
 
 percentages2 <- frequencies2 * 100 / tot2
 percentages2
-
 # forest: 52.07
 # bare soil: 47.93
 
@@ -88,37 +91,47 @@ percentages <- data.frame(cover, percent_1992, percent_2006)
 percentages
 
 # First plot using ggplo2
-ggplot(percentages, aes(x = cover, y = percent_1992, color = cover)) +
-  geom_bar(stat = "identity", fill = "white")
+ggplot(percentages,
+       aes(x = cover, y = percent_1992, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white")
  # we wanna know the identity for this kind of statistics, not the count
-  # we already have the data we meed for the plot
 
-ggplot(percentages, aes(x = cover, y = percent_2006, color = cover)) +
-  geom_bar(stat = "identity", fill = "white")
+ggplot(percentages,
+       aes(x = cover, y = percent_2006, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white")
 
 # patchwork
-p1 <- ggplot(percentages, aes(x = cover, y = percent_1992, color = cover)) +
-  geom_bar(stat = "identity", fill = "white") +
+p1 <- ggplot(percentages,
+             aes(x = cover, y = percent_1992, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white") +
   ggtitle("Year 1992")
 
-p2 <- ggplot(percentages, aes(x = cover, y = percent_2006, color = cover)) +
-  geom_bar(stat = "identity", fill = "white") + 
+p2 <- ggplot(percentages,
+             aes(x = cover, y = percent_2006, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white") + 
   ggtitle("Year 2006")
 
-p1 + p2
+p1 + p2  # put together the plots
 
-# using patchwork to compare the plots
-p1 <- ggplot(percentages, aes(x = cover, y = percent_1992, color = cover)) +
-  geom_bar(stat = "identity", fill = "white") +
-  ggtitle("Year 1992") + #mioermette di dare un titolo ai diversi grafici
+# Use of patchwork to compare the plots
+p1 <- ggplot(percentages,
+             aes(x = cover, y = percent_1992, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white") +
+  ggtitle("Year 1992") +
   ylim(c(0,100))
 
-p2 <- ggplot(percentages, aes(x = cover, y = percent_2006, color = cover)) +
-  geom_bar(stat = "identity", fill = "white") +
+p2 <- ggplot(percentages,
+             aes(x = cover, y = percent_2006, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white") +
   ggtitle("Year 2006") +
-  ylim(c(0,100)) #ylim mi permette 
+  ylim(c(0,100)) # to choose the limits of y axe
 
 p1 + p2
 
 # in order to standardize the y axes of the 2 plots we use ylim() function
-
