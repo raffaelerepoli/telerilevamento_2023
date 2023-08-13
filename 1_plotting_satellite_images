@@ -1,14 +1,16 @@
-# Firts lesson of Remote Sensing in GitHub
+# First lesson of Remote Sensing in GitHub: how to plot images
 
-# Let's install the raster package
+# Let's install and load the raster package
+install.packages("raster")  # Geographic Data Analysis and Modeling
 library(raster)
 
-# Set the working directory
-setwd("C:/lab")
+# Set the working directory in Windows
+setwd("C:/lab/data")
+
 
 # Brick function to import the data
 image_2011 <- brick("p224r63_2011_masked.grd")
-image_2011  # ncell = total pixels
+image_2011  # general information about the image
 # a RasterBrick is a multi-layer raster object
 
 # beware of the size of plots pane, if it's too small it won't work in RStudio
@@ -16,10 +18,11 @@ image_2011  # ncell = total pixels
 # Plot data in a raw way
 plot(image_2011) # default legend
 
+# Colour palette
 colors <- colorRampPalette(c("red", "orange", "yellow")) (100) # n° of shades
 colors_3 <- colorRampPalette(c("red", "orange", "yellow")) (3)
 
-# Plot with the colours palette we chose
+# Plot with the colour palettes we created
 plot(image_2011, col = colors)
 plot(image_2011, col = colors_3) # less details = worse image quality
 
