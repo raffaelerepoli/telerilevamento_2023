@@ -1,15 +1,22 @@
-# CLASSIFICATION OF REMOTE SENSING DATA VIA RSTOOLBOX
+# CLASSIFICATION OF REMOTE SENSING DATA
 
+# Load the raster package
 library(raster)
 
-setwd("C:/lab")
+# Set the working directory in Windows
+setwd("C:/lab/data")
+
+
+# Image of the sun ----
 
 # Brick function for stratified files, raster for images with just one layer
-
+# Let's import data about the sun and visualize them
 sun <- brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
 plotRGB(sun, 1, 2, 3, stretch = "lin")
 plotRGB(sun, 1, 2, 3, stretch = "hist")
 sun
+
+# Classification:
 
 # 1. Get values
 single_nr <- getValues(sun)
@@ -28,6 +35,7 @@ sun_class <- setValues(sun[[1]], k_cluster$cluster) # assign new values to a ras
 # using the first layer of the sun image and cluster component of kmeans
 # the first layer is like a box to be filled
 
+# Plot using a colour palette
 cl <- colorRampPalette(c("yellow", "black", "red"))(100)
 plot(sun_class, col = cl)
 
@@ -38,13 +46,13 @@ plot(sun_class, col = cl)
 # Calculate frequencies of  pixels in clusters
 frequencies <- freq(sun_class)
 frequencies
-tot <- ncell(sun_class)
+tot <- ncell(sun_class)  # function for the total number of pixels/cells of an image
 tot
 percentages <- round((frequencies*100)/tot, digits = 5)
 percentages  # count columns are the perc frequencies
 
 
-# day 2 Grand Canyon
+# Grand Canyon ----
 
 grand_canyon <- brick("dolansprings_oli_2013088_canyon_lrg.jpg")
 grand_canyon
@@ -62,20 +70,17 @@ plotRGB(gc_crop, 1, 2, 3, stretch = "lin")
 ncell(grand_canyon)   # n of pixels of the original image
 ncell(gc_crop)   # n of pixels of the cropped image
 
-
-# classification
-
+# Classification:
 # 1. Get values
 singlenr <- getValues(gc_crop)
 singlenr
-
 # 2. Classify
 kcluster <- kmeans(singlenr, centers = 3)
 kcluster
-
 # 3. Set values
 gcclass <- setValues(gc_crop[[1]], kcluster$cluster) # assign new values to a raster object
 
+# Plot using a colour palette
 cl <- colorRampPalette(c('yellow','black','red'))(100)
 plot(gcclass, col=cl)
 
