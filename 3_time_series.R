@@ -1,21 +1,23 @@
-# Time series analysis
+# TIME SERIES ANALYSIS: importing and analysing several images
 
-# Greenland increase of temperature ----
 # Data and code from Emanuela Cosma
 
+# Load the required packages
 library(raster)
 library(rasterVis)
 library(rgdal)
 
+
+# 1 - Greenland increase of temperature ----
+
+# Set the working directory in Windows
 setwd("C:/lab/greenland")
 
-# raster() function to import tif images with single layer
+# raster() function to import tif images with a single layer
 lst_2000 <- raster("lst_2000.tif")
 lst_2005 <- raster("lst_2005.tif")
 lst_2010 <- raster("lst_2010.tif")
 lst_2015 <- raster("lst_2015.tif")
-
-# rast() function for using the terra package
 
 ls()  # list of objects imported and loaded
 
@@ -35,15 +37,17 @@ import <- lapply(rlist, raster)  # to apply a function to many files of a list
 import
 
 # Stack vectors from a dataframe or list
-TGr <- stack(import)  # or terra::c within terra package
+TGr <- stack(import)
 TGr  # 4 layers
 # stacking vectors concatenates multiple vectors into a single vector
 
 plot(TGr)  # now we have all the images in a single element
 
+# Plot with RGB
 plotRGB(TGr, 1, 2, 3, stretch = "Lin")
 plotRGB(TGr, 2, 3, 4, stretch = "Lin")
 
+# Plot using a colour palette
 cl <- colorRampPalette(c("blue","lightblue","pink","red"))(100)
 plot(TGr, col = cl)
 
@@ -55,8 +59,9 @@ cl <- colorRampPalette(c("blue","lightblue","pink","red"))(100)
 plot(dift, col = cl)
 
 
-#NO2 decrease during the lockdown period ----
+# 2 - NO2 decrease during the lockdown period ----
 
+# New working directory
 setwd("C:/lab/en")
 
 # Import the first image file
@@ -64,9 +69,11 @@ en01 <- raster("EN_0001.png")
 en01
 plot(en01) # it's January, before the lockdown
 
+# Plot using a colour palette
 cl <- colorRampPalette(c('red','orange','yellow'))(100) #
 plot(en01, col = cl)
 
+# Plot the last image
 en13 <- raster("EN_0013.png")
 plot(en13, col = cl) # it's March, after lockdown began
 
@@ -82,7 +89,7 @@ rimp
 en <- stack(rimp)
 en
 
-# plot everything
+# Plot everything
 plot(en, col = cl)
 
 # Check by visualizing plot in a multiframe
