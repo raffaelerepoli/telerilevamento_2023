@@ -1,114 +1,139 @@
-# CLASSIFICATION OF REMOTE SENSING DATA
+# LAND COVER
 
-# Load the raster package
+# Load the required packages
 library(raster)
+library(ggplot2) # for ggplot graphs
+library(patchwork) # to combine separate ggplots into the same graphic
 
 # Set the working directory in Windows
 setwd("C:/lab/data")
 
 
-# Image of the sun ----
+# Load the data about deforestation
+defor1 <- brick("defor1_.png")
+defor2 <- brick("defor2_.png")
 
-# Brick function for stratified files, raster for images with just one layer
-# Let's import data about the sun and visualize them
-sun <- brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
-plotRGB(sun, 1, 2, 3, stretch = "lin")
-plotRGB(sun, 1, 2, 3, stretch = "hist")
-sun
+# NIR 1, RED 2, GREEN 3
 
-# Classification:
+# Plot the image in a multiframe
+par(mfrow = c(2,1))
+plotRGB(defor1, 1, 2, 3, stretch = "lin")
+plotRGB(defor2, 1, 2, 3, stretch = "lin")
 
-# 1. Get values
-single_nr <- getValues(sun)
-# returns all values or the values for a number of rows of a Raster object
-single_nr
-# from the image with layers to the values of the reflectance of each layer
+
+# Classification of the 1992 image
+
+# 1. Get all the single values
+singlenr1 <- getValues(defor1)
+singlenr1
 
 # 2. Classify
-k_cluster <- kmeans(single_nr, centers = 3) # centers = num of classes/clusters
-# clustering, Means = centroid of a cluster of pixels
-k_cluster
+kcluster1 <- kmeans(singlenr1, centers = 2)
+kcluster1
 
-# 3. Set values to a raster on the basis of the sun image
-sun_class <- setValues(sun[[1]], k_cluster$cluster) # assign new values to a raster object
-# from continues data to a raster object
-# using the first layer of the sun image and cluster component of kmeans
-# the first layer is like a box to be filled
+# 3. Recreating an image
+defor1_class <- setValues(defor1[[1]], kcluster1$cluster) # assign new values to a raster object
 
-# Plot using a colour palette
-cl <- colorRampPalette(c("yellow", "black", "red"))(100)
-plot(sun_class, col = cl)
+# Plot the classified image
+par(mfrow = c(1,1))
+plot(defor1_class)
 
-# class 1: highest energy level
-# class 2: medium energy level
-# class 3: lowest energy level
-
-# Calculate frequencies of  pixels in clusters
-frequencies <- freq(sun_class)
-frequencies
-tot <- ncell(sun_class)  # function for the total number of pixels/cells of an image
-tot
-percentages <- round((frequencies*100)/tot, digits = 5)
-percentages  # count columns are the perc frequencies
+# class1 (white): forest
+# class2 (green): bare soil
 
 
-# Grand Canyon ----
+# Classification of the 2006 image
 
-grand_canyon <- brick("dolansprings_oli_2013088_canyon_lrg.jpg")
-grand_canyon
+# 1. Get all the single values
+singlenr2 <- getValues(defor2)
+singlenr2
 
-# red = 1 green = 2 blue = 3
-plotRGB(grand_canyon, 1, 2, 3, stretch = "lin")
-
-# Change the stretch to histogram stretching
-plotRGB(grand_canyon, 1, 2, 3, stretch = "hist")
-
-# The image is quite big; let's crop it!
-gc_crop <- crop(grand_canyon, drawExtent())
-plotRGB(gc_crop, 1, 2, 3, stretch = "lin")
-
-ncell(grand_canyon)   # n of pixels of the original image
-ncell(gc_crop)   # n of pixels of the cropped image
-
-# Classification:
-# 1. Get values
-singlenr <- getValues(gc_crop)
-singlenr
 # 2. Classify
-kcluster <- kmeans(singlenr, centers = 3)
-kcluster
-# 3. Set values
-gcclass <- setValues(gc_crop[[1]], kcluster$cluster) # assign new values to a raster object
+kcluster2 <- kmeans(singlenr2, centers = 2)
+kcluster2
 
-# Plot using a colour palette
-cl <- colorRampPalette(c('yellow','black','red'))(100)
-plot(gcclass, col=cl)
+# 3. Recreating an image
+defor2_class <- setValues(defor2[[1]], kcluster2$cluster) # assign new values to a raster object
 
-# class 1: volcanic rocks
-# class 2: sandstone
-# class 3: conglomerates
+plot(defor2_class)
 
-frequencies <- freq(gcclass)
-frequencies
-tot <- ncell(gcclass)
-percentages = frequencies * 100 /  tot
+# class1 (white): forest
+# class2 (green) : bare soil
+
+# Multiframe
+par(mfrow = c(2,1))
+plot(defor1_class)
+plot(defor2_class)
+
+# Class percentages 1992
+frequencies1 <- freq(defor1_class)
+frequencies1
+tot1 <- ncell(defor1_class)
+tot1
+percentages1 <- frequencies1 * 100 / tot1
+percentages1
+# forest: 89.75
+# bare soil: 10.25
+
+# Class percentages 2006
+frequencies2 <- freq(defor2_class)
+frequencies2
+tot2 <- ncell(defor2_class)
+tot2
+percentages2 <- frequencies2 * 100 / tot2
+percentages2
+# forest: 52.07
+# bare soil: 47.93
+
+# Let's make a dataframe
+cover <- c("Forest","Bare soil")
+percent_1992 <- c(89.75, 10.25)
+percent_2006 <- c(52.07, 47.93)
+percentages <- data.frame(cover, percent_1992, percent_2006)
 percentages
 
+# First plot using ggplo2
+ggplot(percentages,
+       aes(x = cover, y = percent_1992, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white")
+ # we wanna know the identity for this kind of statistics, not the count
 
-# Exercise: classify the map with 4 classes
-singlenr_2 <- getValues(gc_crop)
-singlenr_2
+ggplot(percentages,
+       aes(x = cover, y = percent_2006, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white")
 
-kcluster_2 <- kmeans(singlenr_2, centers = 4)
-kcluster_2
+# patchwork
+p1 <- ggplot(percentages,
+             aes(x = cover, y = percent_1992, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white") +
+  ggtitle("Year 1992")
 
-gcclass_2 <- setValues(gc_crop[[1]], kcluster_2$cluster)
+p2 <- ggplot(percentages,
+             aes(x = cover, y = percent_2006, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white") + 
+  ggtitle("Year 2006")
 
-cl <- colorRampPalette(c('yellow','black','red', 'blue'))(100)
-plot(gcclass_2, col=cl)
+p1 + p2  # put together the plots
 
-frequencies <- freq(gcclass_2)
-frequencies
-tot <- ncell(gcclass_2)
-percentages = frequencies * 100 /  tot
-percentages
+# Use of patchwork to compare the plots
+p1 <- ggplot(percentages,
+             aes(x = cover, y = percent_1992, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white") +
+  ggtitle("Year 1992") +
+  ylim(c(0,100))
+
+p2 <- ggplot(percentages,
+             aes(x = cover, y = percent_2006, color = cover)) +
+  geom_bar(stat = "identity",
+           fill = "white") +
+  ggtitle("Year 2006") +
+  ylim(c(0,100)) # to choose the limits of y axe
+
+p1 + p2
+
+# in order to standardize the y axes of the 2 plots we use ylim() function
