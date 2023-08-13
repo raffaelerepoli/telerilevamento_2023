@@ -1,8 +1,10 @@
-# Calculating spectral indices
+# VEGETATION INDICES: calculating spectral indices
 
+# Load the raster package
 library(raster)
 
-setwd("C:/lab/")
+# Set the working directory in Windows
+setwd("C:/lab/data")
 
 
 # IMAGE FROM 1992 ----
@@ -82,6 +84,14 @@ cld <- colorRampPalette(c("blue", "white", "red"))(100)
 plot(dvi_dif, col = cld)
 # the higher the difference the bigger the deforestation
 # if the difference is negative there is a gain in forest cover
+
+# Range DVI (8 bit): -255 a 255
+# Range NDVI (8 bit): -1 a 1
+
+# Range DVI (16 bit): -65535 a 65535
+# Range NDVI (16 bit): -1 a 1
+
+# Hence, NDVI can be used to compare images with a different radiometric resolution
 
 
 # NDVI ----
