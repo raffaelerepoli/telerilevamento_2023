@@ -25,7 +25,7 @@ dsm_2013  # info of the raster object
 plot(dsm_2013, main = "Lidar Digital Surface Model San Genesio/Jenesien")
 
 # Coerce the DSM 2013 into a dataframe
-dsm_2013d <- as.data.frame(dsm_2013, xy=T)
+dsm_2013d <- as.data.frame(dsm_2013, xy = T)
 head(dsm_2013d)
 
 # Plot with ggplot
@@ -46,13 +46,13 @@ dtm_2013
 plot(dtm_2013, main = "Lidar Digital Terrain Model San Genesio/Jenesien")
 
 # Coerce the DTM 2013 into a dataframe
-dtm_2013d <- as.data.frame(dtm_2013, xy=T)
+dtm_2013d <- as.data.frame(dtm_2013, xy = T)
 head(dtm_2013d)
 
 # Plot with ggplot
 ggplot() +
   geom_raster(dtm_2013d,
-              mapping = aes(x = x, y = , fill = X2013Elevation_DigitalTerrainModel.0.5m)) +
+              mapping = aes(x = x, y = y, fill = X2013Elevation_DigitalTerrainModel.0.5m)) +
   scale_fill_viridis(option = "magma") +
   ggtitle("Lidar Digital Terrain Model San Genesio/Jenesien")
 
@@ -69,7 +69,7 @@ chm_2013d <- as.data.frame(chm_2013, xy = T)
 # Plot CHM 2013 using ggplot
 ggplot() +
   geom_raster(chm_2013d,
-              mapping = aes(x = x, y=y, fill = layer)) +
+              mapping = aes(x = x, y = y, fill = layer)) +
   scale_fill_viridis() +
   ggtitle("CHM 2013 San Genesio/Jenesien")
 
@@ -87,13 +87,14 @@ p1 <- ggplot() +
   ggtitle("Lidar Digital Surface Model San Genesio/Jenesien")
 
 p2 <- ggplot() +
-  geom_raster(dtm_2013d, mapping =aes(x=x, y=y, fill=  X2013Elevation_DigitalTerrainModel.0.5m)) +
+  geom_raster(dtm_2013d,
+              mapping = aes(x = x, y = y, fill = X2013Elevation_DigitalTerrainModel.0.5m)) +
   scale_fill_viridis(option = "magma") +
   ggtitle("Lidar Digital Terrain Model San Genesio/Jenesien")
 
 p3 <- ggplot() +
   geom_raster(chm_2013d,
-              mapping = aes(x = x, y=y, fill = layer)) +
+              mapping = aes(x = x, y = y, fill = layer)) +
   scale_fill_viridis() +
   ggtitle("CHM 2013 San Genesio/Jenesien")
 
