@@ -12,25 +12,54 @@ library(ggplot2)
 library(patchwork)
 
 # Set working directory in Windows
-setwd("C:/lab/data")
+setwd("C:/lab/lidar")
 
 
-# Load data: Digital Surface Model 2013
+# Digital Surface Model 2013 ----
+
+# Load data
 dsm_2013 <- raster("2013Elevation_DigitalElevationModel-0.5m.tif")
 dsm_2013  # info of the raster object
 
 # Plot the DSM 2013
 plot(dsm_2013, main = "Lidar Digital Surface Model San Genesio/Jenesien")
 
-# Load data: Digital Terrain Model 2013
+# Coerce the DSM 2013 into a dataframe
+dsm_2013d <- as.data.frame(dsm_2013, xy=T)
+head(dsm_2013d)
+
+# Plot with ggplot
+ggplot() +
+  geom_raster(dsm_2013d,
+              mapping = aes(x = x, y = y, fill = X2013Elevation_DigitalElevationModel.0.5m)) +
+  scale_fill_viridis() +
+  ggtitle("Lidar Digital Surface Model San Genesio/Jenesien")
+
+
+# Digital Terrain Model 2013 ----
+
+# Load data
 dtm_2013 <- raster("2013Elevation_DigitalTerrainModel-0.5m.tif")
-dTm_2013
+dtm_2013
 
 # Plot the DTM 2013
 plot(dtm_2013, main = "Lidar Digital Terrain Model San Genesio/Jenesien")
 
+# Coerce the DTM 2013 into a dataframe
+dtm_2013d <- as.data.frame(dtm_2013, xy=T)
+head(dtm_2013d)
 
-# Create CHM 2013 as difference between DEM and DTM
+# Plot with ggplot
+ggplot() +
+  geom_raster(dtm_2013d,
+              mapping = aes(x = x, y = , fill = X2013Elevation_DigitalTerrainModel.0.5m)) +
+  scale_fill_viridis(option = "magma") +
+  ggtitle("Lidar Digital Terrain Model San Genesio/Jenesien")
+
+
+# Difference between DSM and DTM 2013 ----
+
+# Create CHM 2013 as difference between DSM and DTM
 chm_2013 <- dsm_2013 - dtm_2013
 chm_2013  # view CHM attributes
 
@@ -48,65 +77,64 @@ ggplot() +
 writeRaster(chm_2013,"chm_2013_San_genesio.tif")
 
 
-# Load data: Digital Surface Model 2004
+# Plots 2013 ----
+
+# Multiframe using patchwork
+p1 <- ggplot() +
+  geom_raster(dsm_2013d,
+              mapping = aes(x = x, y = y, fill = X2013Elevation_DigitalElevationModel.0.5m)) +
+  scale_fill_viridis() +
+  ggtitle("Lidar Digital Surface Model San Genesio/Jenesien")
+
+p2 <- ggplot() +
+  geom_raster(dtm_2013d, mapping =aes(x=x, y=y, fill=  X2013Elevation_DigitalTerrainModel.0.5m)) +
+  scale_fill_viridis(option = "magma") +
+  ggtitle("Lidar Digital Terrain Model San Genesio/Jenesien")
+
+p3 <- ggplot() +
+  geom_raster(chm_2013d,
+              mapping = aes(x = x, y=y, fill = layer)) +
+  scale_fill_viridis() +
+  ggtitle("CHM 2013 San Genesio/Jenesien")
+
+p1 + p2 + p3
+
+
+# Digital Surface Model 2004 ----
+
+# Load data
 dsm_2004 <- raster("2004Elevation_DigitalElevationModel-2.5m.tif")
 dsm_2004
 
 # Plot the DSM 2004
-plot(dsm_2004, main="Lidar Digital Surface Model San Genesio/Jenesien")
+plot(dsm_2004, main = "Lidar Digital Surface Model San Genesio/Jenesien")
 
-# Load data: Digital Terrain Model 2004
+
+# Digital Terrain Model 2004 ----
+
+# Load data
 dtm_2004 <- raster("2004Elevation_DigitalTerrainModel-2.5m.tif")
+dtm_2004
 
 # Plot the DTM 2004
 plot(dtm_2004, main = "Lidar Digital Terrain Model San Genesio/Jenesien")
 
+
+# Difference between DSM and DTM 2004 ----
 
 # Create CHM 2004 as difference between DSM and DTM
 chm_2004 <- dsm_2004 - dtm_2004
 chm_2004
 
 # Coerce into a dataframe
-chm_2004d <- as.data.frame(chm_2004, xy=T)
+chm_2004d <- as.data.frame(chm_2004, xy = T)
 
 # Plot CHM 2004
 ggplot() +
-  geom_raster(chm_2004d, mapping =aes(x=x, y=y, fill=layer)) +
+  geom_raster(chm_2004d,
+              mapping = aes(x = x,y = y, fill = layer)) +
   scale_fill_viridis() +
   ggtitle("CHM 2004 San Genesio/Jenesien")
 
 # Save CHM on computer
 writeRaster(chm_2004,"chm_2004_San_genesio.tif")
-
-
-#error
-difference_chm<-chm_2013-chm_2004
-
-#reseample 2013 to 2004 @2.5m
-chm_2013_reseampled<-resample(chm_2013, chm_2004)
-
-#calculate difference in CHM
-difference<-chm_2013_reseampled-chm_2004
-
-#plot the difference
-ggplot() +
-  geom_raster(difference, mapping =aes(x=x, y=y, fill=layer)) +
-  scale_fill_viridis() +
-  ggtitle("difference CHM San Genesio/Jenesien")
-
-
-#save the rasters
-writeRaster(chm_2013_reseampled,"chm_2013_reseampled_San_genesio.tif")
-writeRaster(difference,"difference chm San_genesio.tif")
-
-
-
-## point cloud
-
-library(lidR)
-
-#load point cloud
-point_cloud<-readLAS("C:/lab/dati/LIDAR-PointCloudCoverage-2013SolarTirol.laz")
-
-#plot r3 point cloud
-plot(point_cloud)
