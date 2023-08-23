@@ -50,32 +50,32 @@ ggplot() +
 
 # Exercise: the same path but with an other image chosen by me
 
-forest_cover <- raster("c_gls_FCOVER-RT0_202006300000_GLOBE_PROBAV_V2.0.1.nc")
-forest_cover
-ncell(forest_cover)
-plot(forest_cover)
+fcover <- raster("c_gls_FCOVER-RT0_202006300000_GLOBE_PROBAV_V2.0.1.nc")
+fcover
+ncell(fcover)
+plot(fcover)
 
 # Too big, let's crop
 ext <- c(166, 179, -48, -34)  # New Zealand coordinates
-forest_nz <- crop(forest_cover, ext)
-forest_nz_d <- as.data.frame(forest_nz, xy = T)
-colnames(forest_nz_d)
+fcover_nz <- crop(fcover, ext)
+fcover_nz_d <- as.data.frame(fcover_nz, xy = T)
+colnames(fcover_nz_d)
 
 ggplot() +
-  geom_raster(forest_nz_d,
+  geom_raster(fcover_nz_d,
               mapping = aes(x = x, y = y,
                             fill = Fraction.of.green.Vegetation.Cover.1km))
 # fill = third column of the dataframe
 
 # Let's focus on Egmnot National Park
 ext <- c(173, 176, -40, -38 )
-forest_eg <- crop(forest_nz, ext)
-plot(forest_eg)
-forest_eg_d <- as.data.frame(forest_eg, xy = T)
+fcover_eg <- crop(fcover_nz, ext)
+plot(fcover_eg)
+fcover_eg_d <- as.data.frame(fcover_eg, xy = T)
 
 # Plot using ggplot
 ggplot() +
-  geom_raster(forest_eg_d,
+  geom_raster(fcover_eg_d,
               mapping = aes(x = x, y = y,
                             fill = Fraction.of.green.Vegetation.Cover.1km)) +
   ggtitle("Cropped soil moisture from Copernicus") +
