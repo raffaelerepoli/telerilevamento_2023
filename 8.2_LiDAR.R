@@ -57,7 +57,7 @@ ggplot() +
   ggtitle("Lidar Digital Terrain Model San Genesio/Jenesien")
 
 
-# Difference between DSM and DTM 2013 ----
+# Canopy Height Model 2013 ----
 
 # Create CHM 2013 as difference between DSM and DTM
 chm_2013 <- dsm_2013 - dtm_2013
@@ -73,7 +73,7 @@ ggplot() +
   scale_fill_viridis() +
   ggtitle("CHM 2013 San Genesio/Jenesien")
 
-# Save the CHM on computer
+# Save the CHM as tif file
 writeRaster(chm_2013,"chm_2013_San_genesio.tif")
 
 
@@ -121,7 +121,7 @@ dtm_2004
 plot(dtm_2004, main = "Lidar Digital Terrain Model San Genesio/Jenesien")
 
 
-# Difference between DSM and DTM 2004 ----
+# # Canopy Height Model 2004 ----
 
 # Create CHM 2004 as difference between DSM and DTM
 chm_2004 <- dsm_2004 - dtm_2004
@@ -137,5 +137,5 @@ ggplot() +
   scale_fill_viridis() +
   ggtitle("CHM 2004 San Genesio/Jenesien")
 
-# Save CHM on computer
+# Save CHM as tif file
 writeRaster(chm_2004,"chm_2004_San_genesio.tif")
