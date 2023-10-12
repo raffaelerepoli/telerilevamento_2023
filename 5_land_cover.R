@@ -24,11 +24,11 @@ plotRGB(defor2, 1, 2, 3, stretch = "lin")
 # Classification of the 1992 image
 
 # 1. Get all the single values
-singlenr1 <- getValues(defor1)
+singlenr1 <- getValues(defor1) # getValues returns all values or the values for a number of rows of a Raster object
 singlenr1
 
 # 2. Classify
-kcluster1 <- kmeans(singlenr1, centers = 2)
+kcluster1 <- kmeans(singlenr1, centers = 2) # perform k-means clustering on a data matrix
 kcluster1
 
 # 3. Recreating an image
