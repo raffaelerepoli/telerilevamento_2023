@@ -24,15 +24,19 @@ plotRGB(defor2, 1, 2, 3, stretch = "lin")
 # Classification of the 1992 image
 
 # 1. Get all the single values
-singlenr1 <- getValues(defor1) # getValues returns all values or the values for a number of rows of a Raster object
+singlenr1 <- getValues(defor1)
+# getValues returns all values or the values for a number of rows of a Raster object
 singlenr1
 
 # 2. Classify
-kcluster1 <- kmeans(singlenr1, centers = 2) # perform k-means clustering on a data matrix
+kcluster1 <- kmeans(singlenr1, centers = 2)
+# perform k-means clustering on a data matrix
 kcluster1
 
 # 3. Recreating an image
-defor1_class <- setValues(defor1[[1]], kcluster1$cluster) # assign new values to a raster object
+defor1_class <- setValues(defor1[[1]], kcluster1$cluster)
+# assign new values to a raster object
+defor1_class
 
 # Plot the classified image
 par(mfrow = c(1,1))
@@ -53,7 +57,8 @@ kcluster2 <- kmeans(singlenr2, centers = 2)
 kcluster2
 
 # 3. Recreating an image
-defor2_class <- setValues(defor2[[1]], kcluster2$cluster) # assign new values to a raster object
+defor2_class <- setValues(defor2[[1]], kcluster2$cluster)
+defor2_class
 
 plot(defor2_class)
 
