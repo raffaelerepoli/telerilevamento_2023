@@ -94,7 +94,7 @@ col_aquamarine <- colorRampPalette(c("aquamarine4", "aquamarine2", "aquamarine")
 plot(image_2011[[3]], col = col_aquamarine)
 
 #pink
-col_pink <- colorRampPalette(c("pink", "violet", "darkorchid4"))(100)
+col_pink <- colorRampPalette(c("lightpink", "violet", "darkorchid4"))(100)
 plot(image_2011[[4]], col = col_pink)
 
 
