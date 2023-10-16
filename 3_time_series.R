@@ -55,7 +55,6 @@ dev.off()
 
 # Difference between 2005 and 2000:
 dift = TGr[[2]] - TGr[[1]]
-cl <- colorRampPalette(c("blue","lightblue","pink","red"))(100)
 plot(dift, col = cl)
 
 
@@ -70,7 +69,7 @@ en01
 plot(en01) # it's January, before the lockdown
 
 # Plot using a colour palette
-cl <- colorRampPalette(c('red','orange','yellow'))(100) #
+cl <- colorRampPalette(c('red','orange','yellow'))(100)
 plot(en01, col = cl)
 
 # Plot the last image
@@ -119,5 +118,5 @@ plot(difen, col = cl_dif)
 
 # plotRGB
 par(mfrow = c(2,1))
-plotRGB(en, 1, 7, 13, stretch="lin")
-plotRGB(en, 1, 7, 13, stretch="hist")
+plotRGB(en, 1, 7, 13, stretch = "lin")
+plotRGB(en, 1, 7, 13, stretch = "hist")
