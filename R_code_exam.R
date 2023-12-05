@@ -1,5 +1,3 @@
-# R code exam Raffaele Repoli
-
 # R project Raffaele Repoli about Białowieża Forest
 
 library(sp)
@@ -135,68 +133,24 @@ dev.off()
 
 
 
-# Vegetation indices -----
-
-## DVI -----
-
-# Calculate DVI = NIR - red
-dvi_2015 = img_2015[[4]] - img_2015[[3]]
-dvi_2016 = img_2016[[4]] - img_2016[[3]]
-dvi_2017 = img_2017[[4]] - img_2017[[3]]
-dvi_2018 = img_2018[[4]] - img_2018[[3]]
-dvi_2019 = img_2019[[4]] - img_2019[[3]]
-dvi_2020 = img_2020[[4]] - img_2020[[3]]
-dvi_2021 = img_2021[[4]] - img_2021[[3]]
-dvi_2022 = img_2022[[4]] - img_2022[[3]]
-dvi_2023 = img_2023[[4]] - img_2023[[3]]
-
-# Plot the DVI
-par(mfrow = c(3, 3))
-clp1 <- colorRampPalette(c("darkblue", "white", "darkgreen", "black"))(100)
-
-# The darker the red the healthier the vegetation
-plot(dvi_2015, col = clp1, main = "2015")
-plot(dvi_2016, col = clp1, main = "2016")
-plot(dvi_2017, col = clp1, main = "2017")
-plot(dvi_2018, col = clp1, main = "2018")
-plot(dvi_2019, col = clp1, main = "2019")
-plot(dvi_2020, col = clp1, main = "2020")
-plot(dvi_2021, col = clp1, main = "2021")
-plot(dvi_2022, col = clp1, main = "2022")
-plot(dvi_2023, col = clp1, main = "2023")
-
-dev.off()
-
-# Temporal difference
-dvi_dif = dvi_2015 - dvi_2023
-
-# Plot the results of multitemporal analysis
-clp2 <- magma(20)
-plot(dvi_dif, col = clp2, main = "DVI difference 2015-2023")
-# the higher the difference the bigger the loss of vegetation
-# if the difference is negative there is a gain of vegetation
-# we mainly care about the loss and gain of forest cover
-
-dev.off()
-
-
-## NDVI -----
+# NDVI -----
 
 # Calculate NDVI
- # NDVI is metric for quantifying the health and density of vegetation
+ # NDVI is a metric for quantifying the health and density of vegetation
  # range from -1 to +1
-ndvi_2015 = dvi_2015 / (img_2015[[4]] + img_2015[[3]])
-ndvi_2016 = dvi_2016 / (img_2016[[4]] + img_2016[[3]])
-ndvi_2017 = dvi_2017 / (img_2017[[4]] + img_2017[[3]])
-ndvi_2018 = dvi_2018 / (img_2018[[4]] + img_2018[[3]])
-ndvi_2019 = dvi_2019 / (img_2019[[4]] + img_2019[[3]])
-ndvi_2020 = dvi_2020 / (img_2020[[4]] + img_2020[[3]])
-ndvi_2021 = dvi_2021 / (img_2021[[4]] + img_2021[[3]])
-ndvi_2022 = dvi_2022 / (img_2022[[4]] + img_2022[[3]])
-ndvi_2023 = dvi_2023 / (img_2023[[4]] + img_2023[[3]])
+ndvi_2015 = (img_2015[[4]] - img_2015[[3]]) / (img_2015[[4]] + img_2015[[3]])
+ndvi_2016 = (img_2016[[4]] - img_2016[[3]]) / (img_2016[[4]] + img_2016[[3]])
+ndvi_2017 = (img_2017[[4]] - img_2017[[3]]) / (img_2017[[4]] + img_2017[[3]])
+ndvi_2018 = (img_2018[[4]] - img_2018[[3]]) / (img_2018[[4]] + img_2018[[3]])
+ndvi_2019 = (img_2019[[4]] - img_2019[[3]]) / (img_2019[[4]] + img_2019[[3]])
+ndvi_2020 = (img_2020[[4]] - img_2020[[3]]) / (img_2020[[4]] + img_2020[[3]])
+ndvi_2021 = (img_2021[[4]] - img_2021[[3]]) / (img_2021[[4]] + img_2021[[3]])
+ndvi_2022 = (img_2022[[4]] - img_2022[[3]]) / (img_2022[[4]] + img_2022[[3]])
+ndvi_2023 = (img_2023[[4]] - img_2023[[3]]) / (img_2023[[4]] + img_2023[[3]])
 
 # Plot the NDVI
 par(mfrow = c(3, 3))
+clp1 <- colorRampPalette(c("darkblue", "white", "darkgreen", "black"))(100)
 
 plot(ndvi_2015, col = clp1, main = "2015")
 plot(ndvi_2016, col = clp1, main = "2016")
@@ -210,16 +164,17 @@ plot(ndvi_2023, col = clp1, main = "2023")
 
 dev.off()
 
-# Temporal difference
-ndvi_dif = ndvi_2015 - ndvi_2023
+# Temporal difference 2015-2023
+ndvi_dif1 = ndvi_2015 - ndvi_2023
 
 # Plot the results of multitemporal analysis
-plot(ndvi_dif, col = clp2, main = "NDVI difference 2015-2023")
+clp2 <- magma(100)
+plot(ndvi_dif1, col = clp2, main = "NDVI difference 2015-2023")
 # the higher the difference the bigger the loss of vegetation
-# if the difference is negative there is a gain of vegetation
+# if the difference is negative there is a gain in vegetation
 # we mainly care about the loss and gain of forest cover
 
-# it seems the NDVI has an overall decrease from 2015 to 2023
+# It seems the NDVI has an overall decrease from 2015 to 2023
 
 dev.off()
 
@@ -228,7 +183,7 @@ dev.off()
 # Multivariate analysis -----
 
 # PCA (Principal Component Analysis) on a sample of pixels (same as for classification)
-sample <- sampleRandom(ndvi_dif, 10000)
+sample <- sampleRandom(ndvi_dif1, 10000)
 pca <- prcomp(sample)
 
 # Variance explained
@@ -240,7 +195,7 @@ summary(pca)
 pca
 
 # Pc map: we visualize starting from the analysis of the PCA
-pci <- predict(ndvi_dif, pca, index = c(1:3)) # or c(1:2)
+pci <- predict(ndvi_dif1, pca, index = c(1:3)) # or c(1:2)
 plot(pci)
 plot(pci[[1]])
 
@@ -251,11 +206,14 @@ pcid
 ggplot() +
   geom_raster(pcid,
               mapping = aes(x = x, y = y, fill = layer.1)) +
-  scale_fill_viridis(name = "PC1 values")
+  scale_fill_viridis(name = "PC1 values") +
+  labs(title = "PCA of NDVI difference 2015-2023")
 
 setwd("C:/lab/exam_project/images")
 
-ggsave("pca.png")
+ggsave("pca1.png")
+
+dev.off()
 
 
 
@@ -311,9 +269,9 @@ plot(class_2023, col = clp3, main = "2023")
 
 # class 1: bare soil, urban areas, absence of vegetation
 # class 2: low vegetation, cultivated areas with vegetation
-# class 3: forest
+# class 3: forest, tree-covered land
 
-# The colours of the classes can differ from a plot to another, they have to be fitted
+# The colours of the classes can differ from one plot to another, they have to be fitted
 
 dev.off()
 
@@ -329,7 +287,7 @@ results <- data.frame(RasterName = character(0),
                       Class2_Percentage = numeric(0),
                       Class3_Percentage = numeric(0))
 
-# Create a list that contains the values of each classes
+# Create a list that contains the values of each class
 classes <- list(class_2015, class_2016, class_2017, class_2018, class_2019,
                 class_2020, class_2021, class_2022, class_2023)
 
@@ -365,7 +323,7 @@ for (i in 1:length(classes)) {
 # Print or use the results as needed
 print(results)
 
-# Look at the images to assing the values to the right classes
+# Look at the images to assign the values to the right classes
 # Then save them in a dataframe to do some plots
 
 # Create the dataframe with the results for each class
@@ -378,8 +336,7 @@ classes <- gather(classes, class, percentage, -year)
 classes
 
 
-
-# Results -----
+## Results -----
 
 # Plot about classes
 classes$class <- reorder(classes$class, classes$percentage)
@@ -426,4 +383,3 @@ classes %>%
 ggsave("plot_scatter.png", width = 2000, height = 1350, units = "px")
 
 # Apparently, there is no ongoing deforestation in Białowieża
-
