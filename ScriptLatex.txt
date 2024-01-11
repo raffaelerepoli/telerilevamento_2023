@@ -1,0 +1,256 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{subcaption}
+\usepackage{ragged2e}
+\usepackage[T1]{fontenc}
+
+\usetheme{Frankfurt}
+\usecolortheme{orchid}
+
+\title{\textbf{Is Poland cutting down trees in the Białowieża Forest National Park?}}
+
+\author{\textbf{Raffaele Repoli}
+\vspace{4mm}\\
+\small{Course: Geo-Ecological Remote Sensing}
+\vspace{2mm}\\
+\footnotesize{MSc Science and Management of Nature}
+\vspace{2mm}\\
+\footnotesize{University of Bologna}}
+
+\date{\textsc{January 2024}}
+
+\begin{document}
+
+\maketitle
+
+\AtBeginSection[]
+{
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+\begin{frame}{Białowieża Forest}
+\begin{itemize}
+    \item\small \textbf{Białowieża Forest} is a forest on the border between Belarus and Poland. It is one of the last and largest remaining parts of the immense primaeval forest that once stretched across the European Plain.\textsuperscript{[5]}
+    \item\small For its importance, it was designated by UNESCO's Man and the Biosphere Programme as the Bialowieza Biosphere Reserve in 1976.\textsuperscript{[7]}
+    \item\small The Białowieża National Park, Poland, was inscribed on the \textbf{World Heritage List} in 1979 and extended to include Belovezhskaya Pushcha, Belarus, in 1992.\textsuperscript{[9]}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{History of the National Park}
+\begin{itemize}
+    \item\small Its beginnings can be traced back to 1921, when \textbf{the Forest Reserve was created} at the place currently occupied by the Park.
+    \item\small In 1932, the Reserve was transformed into \textbf{National Park}.
+    \item\small After the WWII, the Soviet Union \textbf{divided the Park} between Poland and Belarus.
+    \item\small In 1947, it was reinstated as \textbf{Białowieża National Park}, and under the same name and functions until today.\textsuperscript{[6][10]}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Habitats and biodiversity}
+\begin{itemize}
+    \item\small Most of the Biosphere Reserve is covered by \textbf{oak-lime-hornbeam forest}, a habitat of high value for nature protection in temperate regions.\textsuperscript{[7][8]}
+    \item\small The forest is home to at least \textbf{800 European bison} (\textit{Bison bonasus}).\textsuperscript{[12]}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/bisons.png}
+    \label{fig:wrapfig}
+\end{figure}
+\end{itemize}
+\end{frame}
+
+\begin{frame}<presentation:0>  % {Extent} information
+\begin{itemize}
+    \item\small The Białowieża Forest \textbf{World Heritage site} covers a total area of 141,885 ha, with a buffer zone of 166,708 ha.\textsuperscript{[9]}
+    \item\small The \textbf{Białowieża Biosphere Reserve}, as part of Man and the Biosphere Programme (MAB), has a surface of 92,399.00 ha.\textsuperscript{[7]}
+    \item\small However, the actually protected area is the \textbf{National Park} that covers 10,517.27 ha, of which 6,059.27 ha is under strict protection. There has been a protection zone created around the Park which covers the state commercial forest having an area of 3,224.26 ha.\textsuperscript{[10]}
+        % $2\unit{m^2}$  per le unità di misura
+\end{itemize}
+\end{frame}
+
+\begin{frame}{News}
+\begin{itemize}
+    \item\small\textbf{Poland violated EU law} by ordering large-scale logging in one of Europe's oldest woodlands, the Białowieża Forest.\textsuperscript{[1]}
+    \item\textbf{Logging was suspended in 2018} after the European Court of Justice ruled that Poland had broken EU law by felling trees that were older than 100 years.\textsuperscript{[2]}
+    \item Moreover, the European Commission has previously threatened Poland with \textbf{financial penalties} if it does not comply with the ECJ ruling.\textsuperscript{[2]}
+    \item \small However, Poland has argued the previous decision to order an increase in logging was necessary to fight the \textbf{beetle infestation}.\textsuperscript{[1]}
+    \item\small Recently, a paper stated: "Poland is to resume logging in the primaeval Białowieża forest". \textsuperscript{[2]}
+    \item\small Indeed, the Polish Ministry of Environment has approved new annexes to the \textbf{forest management plans} for the Białowieża and Browsk forest districts.\textsuperscript{[3]}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aim of the project}
+The aim of this analysis by remote sensing is to \textbf{check and understand the condition of the Forest of Białowieża}, inside and around the protected areas, especially in Poland.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Materials}
+
+\begin{frame}{Images}
+I downloaded images from the data explorer of \textbf{Creodias}, focusing on the Białowieża Forest.\textsuperscript{[13][14]}\\
+The images are provided by the \textbf{mission Sentinel-2} of the European Space Agency.
+\vspace{6mm}\\
+These images contain \textbf{4 layers}:\\
+\begin{itemize}
+    \item 1 = blue
+    \item 2 = green
+    \item 3 = red
+    \item 4 = NIR
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Images}
+I chose to have a \textbf{range of at most 2 months}. Indeed, the images I used for the analysis have been produced by remote sensing between August and September, hence I shouldn't see differences in the vegetation due to climate and seasons.
+\vspace{5mm}\\ \footnotesize These are the \textbf{sensing date} (y/m/d) of the images I used for this project: 2015/08/11,  2016/08/28,  2017/09/27,  2018/08/10,  2019/08/25,  2020/08/14,  2021/09/08,  2022/08/24,  2023/09/28.
+\vspace{5mm}\\
+\normalsize The range is from the 10\textsuperscript{th} of August to the 28\textsuperscript{th} of September.
+\end{frame}
+
+\begin{frame}{Images}
+\centering
+    \includegraphics[width = 0.25 \textwidth]{images/image_2015.png}
+    \includegraphics[width = 0.25 \textwidth]{images/image_2016.png}
+    \includegraphics[width = 0.25 \textwidth]{images/image_2017.png}\\
+    \includegraphics[width = 0.25 \textwidth]{images/image_2018.png}
+    \includegraphics[width = 0.25 \textwidth]{images/image_2019.png}
+    \includegraphics[width = 0.25 \textwidth]{images/image_2020.png}\\
+    \includegraphics[width = 0.25 \textwidth]{images/image_2021.png}
+    \includegraphics[width = 0.25 \textwidth]{images/image_2022.png}
+    \includegraphics[width = 0.25 \textwidth]{images/image_2023.png}\\
+\footnotesize Images of Sentinel-2, from 2015 (top-left) to 2023 (bottom-right).
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Methods}
+
+\begin{frame}{NDVI}
+\begin{itemize}
+    \item\small The \textbf{normalized difference vegetation index} (NDVI) is a widely-used metric for quantifying the health and density of vegetation using remote sensing data.
+    \item\small It is calculated from data at two specific bands: \textbf{red} and \textbf{near-infrared}.
+    \item\small --1 < NDVI < 1 % An area with nothing growing in it will have an NDVI of 0.\\ An area with dense, healthy vegetation will have an NDVI of 1.\\ NDVI values less than 0 suggest a lack of dry land, indeed an ocean will yield an NDVI of -1.
+\vspace{4mm}\\
+\end{itemize}
+    \begin{equation} %ndvi
+        NDVI=\frac{NIR-red}{NIR+red}
+    \label{eq:ndvi}  % to label the equation
+    \end{equation}
+\end{frame}
+
+\begin{frame}{PCA}
+\begin{itemize}
+    \item\small \textbf{Principal component analysis} (PCA) is a technique for analyzing large datasets containing a high number of features per observation.
+    \item\small PCA increase the interpretability of data while preserving the maximum amount of information and enabling the visualization of multidimensional data.
+    \item\small The plot returns indications of areas characterized by greater variance, making it possible to identify areas of high vulnerability.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Land Cover}
+\small \textbf{Land cover is the physical material at the surface of Earth}.\\ Land cover maps represent spatial information on different types (classes) of physical coverage of the Earth's surface.\\ Dynamic land cover maps include transitions of land cover classes over time and hence capture \textbf{land cover changes}.\textsuperscript{[16]}
+\vspace{6mm}\\
+I chose 3 classes for the classification of land cover:
+\begin{itemize}
+    \item[--]class 1: bare soil, urban areas;
+    \item[--]class 2: low vegetation, crops;
+    \item[--]class 3: forest.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Results}
+
+\begin{frame}{NDVI}
+    \centering
+    \includegraphics[width = 0.8 \textwidth]{images/ndvi1.png}\\
+    \footnotesize \textbf{NDVI} calculated for each year.
+\end{frame}
+\begin{frame}{NDVI}
+\small{Some blue spots are due to the \textbf{clouds} found in 2015 over the forest, hence it does not mean reforestation is in progress.}
+\vspace{2mm}\\
+    \centering
+    \includegraphics[width = 0.8 \textwidth]{images/ndvi_dif.png}
+\end{frame}
+
+\begin{frame}{PCA}
+    \centering
+    \includegraphics[width = 0.74 \textwidth]{images/pca1.png}
+\end{frame}
+
+\begin{frame}{Land Cover}
+    \centering
+    \includegraphics[width = 0.8 \textwidth]{images/classes.png}\\
+\footnotesize Images that show the classification used for the \textbf{land cover}.
+\end{frame}
+\begin{frame}{Land Cover}
+Results of land cover analysis:
+\vspace{12mm}\\
+    \includegraphics[width = 0.48 \textwidth]{images/plot_bar.png}
+    \includegraphics[width = 0.48 \textwidth]{images/plot_line.png}
+\end{frame}
+\begin{frame}{Land Cover}
+\small{Scatter plot with regression line and confidence interval:}
+\vspace{6mm}\\
+    \centering
+    \includegraphics[width = 0.9 \textwidth]{images/plot_scatter.png}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Discussion}
+
+\begin{frame}{Discussion}
+\begin{itemize}
+    \item NDVI analysis said that the \textbf{vegetation is in a worse condition than before}, this could be caused by logging and bark beetle infestation.
+    \item However, land cover analysis shows that \textbf{the forest cover could have increased}, but this could be due to a bias regarding the cloud cover in the images. Indeed, the images with the highest cloud cover are those from 2015 and 2017, especially in the forest areas, hence this bias could have influenced the analysis.
+    \item Moreover, a recent study identified the hot spots of deforestation in the forest (2015-2018) by finer remote sensing analysis.\textsuperscript{[15]}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusion}
+\centering
+In conclusion, \textbf{I haven't found strong evidence of ongoing deforestation} in the Białowieża Forest.\\ However, \textbf{the condition of the vegetation is getting worse}.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{References}
+
+\begin{frame}{References}
+\begin{enumerate}
+\item\tiny\url{https://www.bbc.co.uk/news/world-europe-43795166}
+\item\tiny\url{https://www.bbc.com/news/world-europe-56341837?piano-footer}
+\item\tiny\url{https://twitter.com/MKiS_GOV_PL/status/1369297623337799687}
+\item\tiny\url{https://www.iucnredlist.org/species/2814/45156279}
+\item\tiny\url{https://en.wikipedia.org/wiki/Białowieża_Forest}
+\item\tiny\url{https://en.wikipedia.org/wiki/Białowieża_National_Park} \item\tiny\url{https://www.unesco.org/en/mab/bialowieza}
+\item\tiny\url{https://eunis.eea.europa.eu/habitats/4193}  \item\tiny\url{https://whc.unesco.org/en/list/33/}
+\item\tiny\url{https://bpn.com.pl/index.php?option=com_content&task=view&id=104&Itemid=178}
+\item\tiny\url{https://en.wikipedia.org/wiki/European_bison}
+\item\tiny"European bison pedigree book 2022" - \url{https://bpn.com.pl/index.php?option=com_content&task=view&id=4317&Itemid=213}
+\item\tiny\url{https://dataspace.copernicus.eu/ecosystem/services/creodias}
+\item\tiny\url{https://explore.creodias.eu/}
+\item\tiny\url{https://doi.org/10.1016/j.biocon.2018.09.001}
+\item\tiny\url{https://land.copernicus.eu/global/products/lc}
+\end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{GitHub}
+
+\begin{frame}{Script}
+Here you can find my script on GitHub:
+\vspace{5mm}\\
+\url{https://github.com/raffaelerepoli/telerilevamento_2023/blob/main/R_code_exam.R}
+\end{frame}
+
+\end{document}
