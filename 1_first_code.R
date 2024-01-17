@@ -24,7 +24,9 @@ colors_3 <- colorRampPalette(c("red", "orange", "yellow")) (3)
 
 # Plot with the colour palettes we created
 plot(image_2011, col = colors)
-plot(image_2011, col = colors_3) # less details = worse image quality
+plot(image_2011, col = colors_3) # less details = worse plot quality
+
+dev.off() # to clean plots
 
 # Plot just one element of the multi-layer image
 plot(image_2011[[4]], col = colors)
@@ -33,16 +35,13 @@ nir <- image_2011$B4_sre # another way to plot it, by assignment
 plot(nir, col = colors)
 plot(nir, col = colors_3) # less shades mean less details
 
+
+# Exercise: change the colour for all the images
+
 # Change of palette
-new_palette <- colorRampPalette(c("aquamarine", "cadetblue", "cyan")) (100)
+new_palette <- colorRampPalette(c("azure","darkorchid","aquamarine", "darkblue")) (100)
 plot(image_2011, col = new_palette)
 plot(image_2011[[4]], col = new_palette) # the fourth layer
-
-# Exercise: plot the NIR band
-# b1 = blue
-# b2 = green
-# b3 = red
-# b4 = NIR
 
 # New colour palette
 palette <- colorRampPalette(c("pink", "violet", "darkorchid4")) (100)
@@ -51,7 +50,7 @@ palette <- colorRampPalette(c("pink", "violet", "darkorchid4")) (100)
 plot(image_2011$B4_sre, col = new_palette)
 plot(image_2011[[4]], col = palette) 
 
-dev.off()  # to clean plots
+dev.off()
 
 # Function to export graphs
 pdf("my_1st_graph.pdf")
@@ -65,8 +64,8 @@ dev.off()
 
 # Function to plot 2 or more graphs in a multiframe
 par(mfrow = c(2, 1))  # a multiframe with 2 rows and 1 column
-plot(image_2011[[3]], col = palette) #red
-plot(image_2011[[4]], col = palette) #NIR
+plot(image_2011[[3]], col = palette)
+plot(image_2011[[4]], col = palette)
 
 dev.off() # to remove the multiframe
 
@@ -97,10 +96,12 @@ plot(image_2011[[3]], col = col_aquamarine)
 col_pink <- colorRampPalette(c("lightpink", "violet", "darkorchid4"))(100)
 plot(image_2011[[4]], col = col_pink)
 
+dev.off()
+
 
 # RGB plotting, plot of multi-layered raster object
- # 3 bands are combined such that they represent the red, green and blue channel
- # This function can be used to make 'true (or false) color images
+ # 3 bands are combined such that they represent the red, green and blue bands
+# This function can be used to make true (or false) color images
  # from Landsat and other multi-band satellite images.
 
 # Blue = 1
@@ -113,7 +114,7 @@ plotRGB(image_2011, r = 3, g = 2, b = 4, stretch = "Lin") # vegetation is blue
 plotRGB(image_2011, r = 3, g = 4, b = 2, stretch = "Lin") # vegetation is green
 # the fourth band is the NIR band, plants strongly reflect NIR
 
-# Multiframe with natural and false colours
+# Multiframe with natural and false colours with linear stretching
 par(mfrow = c(2, 1))
 plotRGB(image_2011, r = 3, g = 2, b = 1, stretch = "Lin")  # natural colours
 plotRGB(image_2011, r = 4, g = 3, b = 2, stretch = "Lin")
@@ -129,10 +130,13 @@ plotRGB(image_2011, r = 4, g = 3, b = 2, stretch = "Hist")
 dev.off()
 
 # Exercise: plot the NIR band
+ # b1 = blue,  b2 = green, b3 = red, b4 = NIR
 plot(image_2011[[4]])
+
 
 # Import the 1988 image
 image_1988 <- brick("p224r63_1988_masked.grd")
+image_1988
 plot(image_1988)
 
 # Plot in RGB space (natural colours)
@@ -145,6 +149,8 @@ plotRGB(image_1988, 4, 3, 2, stretch = "Lin")  # faster way
 par(mfrow = c(2,1))
 plotRGB(image_1988, 4, 3, 2, stretch = "Lin")
 plotRGB(image_2011, 4, 3, 2, stretch = "Lin")
+plotRGB(image_1988, 3, 2, 1, stretch = "Lin") # natural colours
+plotRGB(image_2011, 3, 2, 1, stretch = "Lin") # natural colours
 
 dev.off()
 plotRGB(image_1988, 4, 3, 2, stretch = "Hist")  # histogram stretch
@@ -155,3 +161,9 @@ plotRGB(image_1988, 4, 3, 2, stretch="Lin")
 plotRGB(image_2011, 4, 3, 2, stretch="Lin")
 plotRGB(image_1988, 4, 3, 2, stretch="Hist")
 plotRGB(image_2011, 4, 3, 2, stretch="Hist")
+
+# Multiframe with 4 images
+plotRGB(image_1988, 3, 2, 1, stretch="Lin")
+plotRGB(image_2011, 3, 2, 1, stretch="Lin")
+plotRGB(image_1988, 3, 2, 1, stretch="Hist")
+plotRGB(image_2011, 3, 2, 1, stretch="Hist")
