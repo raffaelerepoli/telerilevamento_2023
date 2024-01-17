@@ -10,14 +10,14 @@ setwd("C:/lab/data")
 # IMAGE FROM 1992 ----
 
 # Import the image.png from 1992
-l1992 <- brick("defor1_.png")
-l1992
+img_1992 <- brick("defor1_.png")
+img_1992
 
 # Plot image with plot() and plotRGB()
-plot(l1992)  # 3 layers
-plotRGB(l1992, 1, 2, 3, stretch = "Lin")
+plot(img_1992)  # 3 layers
+plotRGB(img_1992, 1, 2, 3, stretch = "Lin")
 
-# What is NIR? NIR is red since the image is red
+# What layer is NIR? NIR is red since the vegetation is red
 # NIR = 1
 # red = 2
 # green = 3
@@ -25,7 +25,7 @@ plotRGB(l1992, 1, 2, 3, stretch = "Lin")
 # images exported by NASA with NIR, first band is 1
 
 # Calculate DVI for 1992
-dvi1992 = l1992[[1]] - l1992[[2]]  # NIR - red
+dvi1992 = img_1992[[1]] - img_1992[[2]]  # NIR - red
 dvi1992
 
 # Plot the DVI
@@ -33,7 +33,7 @@ cl <- colorRampPalette(c("darkblue", "yellow", "red", "black"))(100)
 plot(dvi1992, col = cl) 
 # the darker the red the healthier the vegetation
 
-plot(l1992)
+plot(img_1992)
 # reflectance is between 0 and 255
 # so the DVI image range is -255 to 255, because red is 0 - 255
 
@@ -41,15 +41,15 @@ plot(l1992)
 # IMAGE FROM 2006 ----
 
 # Import the most recent image
-l2006 <- brick("C:/lab/defor2_.png")
-l2006
+img_2006 <- brick("defor2_.png")
+img_2006
 
 # Plot image from 2006
-plot(l2006)
-plotRGB(l2006, 1, 2, 3, stretch = "Lin")
+plot(img_2006)
+plotRGB(img_2006, 1, 2, 3, stretch = "Lin")
 
 # Calculate DVI for 2006
-dvi2006 = l2006[[1]] - l2006[[2]]
+dvi2006 = img_2006[[1]] - img_2006[[2]]
 
 # Plot the DVI
 plot(dvi2006, col = cl)
@@ -59,13 +59,13 @@ plot(dvi2006, col = cl)
 
 # Plot the image from 1992 ontop of that of 2006
 par(mfrow = c(2, 1))
-plotRGB(l1992, 1, 2, 3, stretch = "Lin")
-plotRGB(l2006, 1, 2, 3, stretch = "Lin")
+plotRGB(img_1992, 1, 2, 3, stretch = "Lin")
+plotRGB(img_2006, 1, 2, 3, stretch = "Lin")
 
 # Plot the image from 1992 beside that of 2006
 par(mfrow = c(1,2))
-plotRGB(l1992, 1, 2, 3, stretch = "Lin")
-plotRGB(l2006, 1, 2, 3, stretch = "Lin")
+plotRGB(img_1992, 1, 2, 3, stretch = "Lin")
+plotRGB(img_2006, 1, 2, 3, stretch = "Lin")
 
 dev.off()
 
@@ -98,13 +98,20 @@ plot(dvi_dif, col = cld)
 # NDVI = Normalized Difference Vegetation Index
 
 # Calculate NDVI for 1992
-ndvi1992 = dvi1992 / (l1992[[1]] + l1992[[2]])  # standardization
+ndvi1992 = dvi1992 / (img_1992[[1]] + img_1992[[2]])  # standardization
 plot(ndvi1992, col = cl)  # now the index is standard, from -1 to +1
 
 # Calculate NDVI for 2006
-ndvi2006 = dvi2006 / (l2006[[1]] + l2006[[2]])
+ndvi2006 = dvi2006 / (img_2006[[1]] + img_2006[[2]])
 plot(ndvi2006, col = cl)
 
 # Calculate differences of NDVI between 1992 and 2006
 ndvi_dif = ndvi1992 - ndvi2006
 plot(ndvi_dif, col = cld)
+
+# NDVI comparison
+par(mfrow = c(1,2))
+plot(ndvi1992, col = cl, main = "1992")
+plot(ndvi2006, col = cl, main = "2006")
+
+# Where the difference is positive the NDVI decreased
