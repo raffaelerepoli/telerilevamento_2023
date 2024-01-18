@@ -176,6 +176,16 @@ plot(ndvi_dif1, col = clp2, main = "NDVI difference 2015-2023")
 
 # It seems the NDVI has an overall decrease from 2015 to 2023
 
+# Temporal difference 2016-2023
+ndvi_dif1 = ndvi_2016 - ndvi_2023
+plot(ndvi_dif1, col = clp2, main = "NDVI difference 2016-2023")
+
+# Temporal difference 2019-2023
+ndvi_dif1 = ndvi_2019 - ndvi_2023
+plot(ndvi_dif1, col = clp2, main = "NDVI difference 2019-2023")
+
+# The same for these 2 time difference
+
 dev.off()
 
 
