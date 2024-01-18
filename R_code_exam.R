@@ -1,5 +1,7 @@
 # R project Raffaele Repoli about Białowieża Forest
 
+# Is Poland cutting down trees in the Białowieża Forest?
+
 library(sp)
 library(sf)
 library(raster)
