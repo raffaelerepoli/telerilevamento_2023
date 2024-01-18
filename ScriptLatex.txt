@@ -40,9 +40,14 @@
 \begin{frame}{Białowieża Forest}
 \begin{itemize}
     \item\small \textbf{Białowieża Forest} is a forest on the border between Belarus and Poland. It is one of the last and largest remaining parts of the immense primaeval forest that once stretched across the European Plain.\textsuperscript{[5]}
-    \item\small For its importance, it was designated by UNESCO's Man and the Biosphere Programme as the Bialowieza Biosphere Reserve in 1976.\textsuperscript{[7]}
+    \item\small For its importance, it was designated by UNESCO's Man and the Biosphere Programme as the Białowieża Biosphere Reserve in 1976.\textsuperscript{[7]}
     \item\small The Białowieża National Park, Poland, was inscribed on the \textbf{World Heritage List} in 1979 and extended to include Belovezhskaya Pushcha, Belarus, in 1992.\textsuperscript{[9]}
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Maps of Białowieża}
+    \includegraphics[width = 0.5 \textwidth]{images/bialowieza.png}
+    \includegraphics[width = 0.48 \textwidth]{images/bialowieza_protection_zone_map.jpg}
 \end{frame}
 
 \begin{frame}{History of the National Park}
@@ -108,7 +113,7 @@ These images contain \textbf{4 layers}:\\
 \end{frame}
 
 \begin{frame}{Images}
-I chose to have a \textbf{range of at most 2 months}. Indeed, the images I used for the analysis have been produced by remote sensing between August and September, hence I shouldn't see differences in the vegetation due to climate and seasons.
+I chose to have a \textbf{range of at most 2 months}. Indeed, the images I used for the analysis have been produced by remote sensing between August and September, hence I shouldn't see substantial differences in the vegetation due to climate and seasons.
 \vspace{5mm}\\ \footnotesize These are the \textbf{sensing date} (y/m/d) of the images I used for this project: 2015/08/11,  2016/08/28,  2017/09/27,  2018/08/10,  2019/08/25,  2020/08/14,  2021/09/08,  2022/08/24,  2023/09/28.
 \vspace{5mm}\\
 \normalsize The range is from the 10\textsuperscript{th} of August to the 28\textsuperscript{th} of September.
